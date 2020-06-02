@@ -1,0 +1,11 @@
+<soap-env:Envelope xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap-env:Body>
+    <ns0:Anula xmlns:ns0="http://www.asmred.com/">
+      <ns0:docIn>
+        <ns0:Servicios uidcliente="6BAB7A53-3B6D-4D5A-9450-702D2FAC0B11">
+        <ns0:Envio referencia="654654"/>
+    </ns0:Servicios>
+      </ns0:docIn>
+    </ns0:Anula>
+  </soap-env:Body>
+</soap-env:Envelope>
