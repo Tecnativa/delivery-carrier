@@ -14,6 +14,6 @@
         'delivery',
     ],
     'data': [
-        'views/delivery_carrier.xml',
+        'views/delivery_carrier_views.xml',
     ],
 }
