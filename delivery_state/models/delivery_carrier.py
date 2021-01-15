@@ -7,6 +7,12 @@ from odoo import fields, models
 class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
+    send_delivery_confirmation = fields.Boolean(
+        string="Send Delivery Confirmation",
+        help="When the delivery is done, send a confirmation email "
+             "to the customer with the tracking number.",
+    )
+
     def send_shipping(self, pickings):
         res = super().send_shipping(pickings)
         pickings.write({

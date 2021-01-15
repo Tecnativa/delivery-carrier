@@ -19,6 +19,9 @@
     ],
     'data': [
         'data/ir_cron_data.xml',
+        'data/mail_template.xml',
         'views/stock_picking_views.xml',
+        'views/res_config_settings_views.xml',
+        'views/delivery_carrier_views.xml',
     ],
 }
