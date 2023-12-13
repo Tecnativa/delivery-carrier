@@ -4,14 +4,25 @@
         <field name="name">delivery.stock.picking_withcarrier.form.view</field>
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="delivery.view_picking_withcarrier_out_form" />
+        <field name="priority">99</field>
         <field name="arch" type="xml">
-            <field name="carrier_id" position="after">
+            <field name="carrier_id" position="replace" />
+            <field name="owner_id" position="after">
                 <field name="purchase_id" invisible="1" />
-                <field
-                    name="carrier_price"
-                    force_save="1"
-                    attrs="{'invisible': ['|', ('purchase_id', '=', False),('carrier_id', '=', False)]}"
-                />
+                <label for="carrier_id" />
+                <div class="d-flex">
+                    <field
+                        name="carrier_id"
+                        attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}"
+                        options="{'no_create': True, 'no_open': True}"
+                    />
+                    <span class="o_form_label mx-3" />
+                    <field
+                        name="carrier_price"
+                        force_save="1"
+                        attrs="{'invisible': ['|', ('purchase_id', '=', False),('carrier_id', '=', False)]}"
+                    />
+                </div>
             </field>
         </field>
     </record>
