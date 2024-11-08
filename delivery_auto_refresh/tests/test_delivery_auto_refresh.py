@@ -85,7 +85,7 @@ class TestDeliveryAutoRefresh(common.TransactionCase):
             ol_form.product_uom_qty = 2
         cls.order = order_form.save()
 
-    def test_auto_refresh_so(self):
+    def test_01_auto_refresh_so(self):
         self.assertFalse(self.order.order_line.filtered("is_delivery"))
         self.settings.sale_auto_add_delivery_line = True
         self.settings.execute()
@@ -124,7 +124,7 @@ class TestDeliveryAutoRefresh(common.TransactionCase):
         line_delivery = self.order.order_line.filtered("is_delivery")
         self.assertEqual(line_delivery.name, "Test carrier 1")
 
-    def test_auto_refresh_picking(self):
+    def test_02_auto_refresh_picking(self):
         self.settings.sale_refresh_delivery_after_picking = True
         self.settings.execute()
         self.order.order_line.product_uom_qty = 3
@@ -143,7 +143,7 @@ class TestDeliveryAutoRefresh(common.TransactionCase):
         line_delivery = self.order.order_line.filtered("is_delivery")
         self.assertEqual(line_delivery.price_unit, 50)
 
-    def test_auto_refresh_picking_fixed_price(self):
+    def test_03_auto_refresh_picking_fixed_price(self):
         self.settings.sale_refresh_delivery_after_picking = True
         self.settings.execute()
         product_fixed_price = self.env["product.product"].create(
@@ -174,7 +174,7 @@ class TestDeliveryAutoRefresh(common.TransactionCase):
         line_delivery = self.order.order_line.filtered("is_delivery")
         self.assertEqual(line_delivery.price_unit, 2)
 
-    def test_no_auto_refresh_picking(self):
+    def test_04_no_auto_refresh_picking(self):
         self.settings.sale_refresh_delivery_after_picking = False
         self.settings.execute()
         self.order.order_line.product_uom_qty = 3
@@ -241,27 +241,27 @@ class TestDeliveryAutoRefresh(common.TransactionCase):
         self._return_whole_picking(self.order.picking_ids, to_refund)
         return line_delivery
 
-    def test_auto_refresh_so_and_return_no_invoiced(self):
+    def test_05_auto_refresh_so_and_return_no_invoiced(self):
         """The delivery line is voided as all conditions apply when the return
         is made"""
         line_delivery = self._test_autorefresh_void_line()
         self.assertEqual(line_delivery.price_unit, 0)
         self.assertEqual(line_delivery.product_uom_qty, 0)
 
-    def test_auto_refresh_so_and_return_no_invoiced_locked(self):
+    def test_06_auto_refresh_so_and_return_no_invoiced_locked(self):
         """The delivery line is voided as all conditions apply when the return
         is made. We overrided the locked state in this case"""
         line_delivery = self._test_autorefresh_void_line(lock=True)
         self.assertEqual(line_delivery.price_unit, 0)
         self.assertEqual(line_delivery.product_uom_qty, 0)
 
-    def test_auto_refresh_so_and_return_invoiced(self):
+    def test_07_auto_refresh_so_and_return_invoiced(self):
         """There's already an invoice, so the delivery line can't be voided"""
         line_delivery = self._test_autorefresh_void_line(invoice=True)
         self.assertEqual(line_delivery.price_unit, 50)
         self.assertEqual(line_delivery.product_uom_qty, 1)
 
-    def test_auto_refresh_so_and_return_no_refund(self):
+    def test_08_auto_refresh_so_and_return_no_refund(self):
         """The return wasn't flagged to refund, so the delivered qty won't
         change, thus the delivery line shouldn't be either"""
         line_delivery = self._test_autorefresh_void_line(to_refund=False)
@@ -280,7 +280,7 @@ class TestDeliveryAutoRefresh(common.TransactionCase):
         sale_form.save()
         return self.order.order_line.filtered("is_delivery")
 
-    def test_auto_refresh_so_and_unlink_line(self):
+    def test_09_auto_refresh_so_and_unlink_line(self):
         """The return wasn't flagged to refund, so the delivered qty won't
         change, thus the delivery line shouldn't be either"""
         self._test_autorefresh_unlink_line()
@@ -290,7 +290,7 @@ class TestDeliveryAutoRefresh(common.TransactionCase):
         sale_form.save()
         self.assertFalse(delivery_line.exists())
 
-    def test_auto_add_delivery_line_add_service(self):
+    def test_10_auto_add_delivery_line_add_service(self):
         """No delivery line when service only"""
         self.settings.sale_auto_add_delivery_line = True
         self.settings.set_values()
@@ -308,7 +308,7 @@ class TestDeliveryAutoRefresh(common.TransactionCase):
         delivery_line = order.order_line.filtered("is_delivery")
         self.assertFalse(delivery_line.exists())
 
-    def test_auto_refresh_so_and_manually_unlink_delivery_line(self):
+    def test_11_auto_refresh_so_and_manually_unlink_delivery_line(self):
         """Manually remove the delivery line"""
         self._test_autorefresh_unlink_line()
         sale_form = Form(self.order)
