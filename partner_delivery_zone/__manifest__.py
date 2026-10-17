@@ -3,7 +3,7 @@
 {
     "name": "Partner Delivery Zone",
     "summary": "Enables partner delivery zones for physical products",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "development_status": "Beta",
     "category": "Delivery",
     "website": "https://github.com/OCA/delivery-carrier",
@@ -13,12 +13,12 @@
     "installable": True,
     "depends": ["sale_stock", "contacts"],
     "data": [
-        "security/ir.model.access.csv",
         "views/partner_delivery_zone_view.xml",
         "views/res_partner_view.xml",
         "views/sale_order_view.xml",
         "views/stock_picking_view.xml",
         "views/report_deliveryslip.xml",
         "views/report_shipping.xml",
+        "security/ir.access.csv",
     ],
 }

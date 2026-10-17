@@ -10,6 +10,12 @@ from odoo.addons.base.tests.common import BaseCommon
 
 @tagged("post_install", "-at_install")
 class TestPartnerDeliveryZone(BaseCommon):
+    _test_user_groups = (
+        "sales_team.group_sale_salesman_all_leads",
+        "stock.group_stock_manager",
+        "base.group_partner_manager",
+    )
+
     at_install = False
     post_install = True
 
@@ -80,7 +86,7 @@ class TestPartnerDeliveryZone(BaseCommon):
         )
         ctx = self._get_ctx_from_view(res)
         self.assertTrue("default_delivery_zone_id" in ctx)
-        view = self.View.create(
+        view = self.View.sudo().create(
             {
                 "name": "test",
                 "type": "form",
